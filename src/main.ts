@@ -6,13 +6,14 @@ import location from "./ts/location";
 
 (searchButton as HTMLButtonElement).onclick = async () => {
   try {
-    const weatherPromise = await fetch(
+    const response = await fetch(
       `http://api.weatherapi.com/v1/current.json?key=360903de59304a0ea59113502232010&q=${searchBar.value}`
     );
 
-    const weatherPromiseJSON = await weatherPromise.json();
-    location.textContent = weatherPromiseJSON.location.name;
-    weatherText.textContent = weatherPromiseJSON.current.condition.text;
+    const weatherData = await response.json();
+    console.log(weatherData);
+    location.textContent = weatherData.location.name;
+    weatherText.textContent = weatherData.current.condition.text;
   } catch (error) {
     console.log(error);
   }
