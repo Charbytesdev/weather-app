@@ -2,6 +2,7 @@ import "./scss/style.scss";
 import searchBar from "./ts/searchBar";
 import searchButton from "./ts/searchButton";
 import weatherText from "./ts/weatherText";
+import location from "./ts/location";
 
 (searchButton as HTMLButtonElement).onclick = async () => {
   try {
@@ -10,6 +11,7 @@ import weatherText from "./ts/weatherText";
     );
 
     const weatherPromiseJSON = await weatherPromise.json();
+    location.textContent = weatherPromiseJSON.location.name;
     weatherText.textContent = weatherPromiseJSON.current.condition.text;
   } catch (error) {
     console.log(error);
