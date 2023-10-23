@@ -16,6 +16,7 @@ const [
   timeText,
   temperatureText,
   temperatureSwapButton,
+  weatherImg,
 ] = getById(
   "search-bar",
   "search-button",
@@ -24,7 +25,8 @@ const [
   "date",
   "time",
   "temperature",
-  "swap-temperature"
+  "swap-temperature-button",
+  "weather-img"
 ) as HTMLElement[];
 
 (searchButton as HTMLButtonElement).onclick = async () => {
@@ -34,7 +36,7 @@ const [
     );
     const weatherData = await response.json();
     const dateTimeData = new Date(weatherData.location.localtime);
-
+    (weatherImg as HTMLImageElement).src = weatherData.current.condition.icon;
     weatherText.textContent = weatherData.current.condition.text;
     locationText.textContent = weatherData.location.name;
     dateText.textContent = format(dateTimeData, `eeee, do MMM ''yy`);
