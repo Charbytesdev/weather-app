@@ -95,9 +95,17 @@ function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
 
   const maxFahrenheitTemps = getNextDayTemps(forecastDays, "maxtemp_f");
 
+  const minCelsiusTemps = getNextDayTemps(forecastDays, "mintemp_c");
+
+  const minFahrenheitTemps = getNextDayTemps(forecastDays, "mintemp_f");
+
   [day1MAXTemp.textContent, day2MAXTemp.textContent] = isCelsius
     ? maxFahrenheitTemps
     : maxCelsiusTemps;
+
+  [day1MINTemp.textContent, day2MINTemp.textContent] = isCelsius
+    ? minFahrenheitTemps
+    : minCelsiusTemps;
 }
 
 function swapTemperatures(
