@@ -120,10 +120,10 @@ function swapTemperatures(
   temperatureSwapButton.textContent = isCelsius ? "Display °C" : "Display °F";
 }
 
-async function getCurrentWeather() {
+async function getWeather(city: string = "london") {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=360903de59304a0ea59113502232010&days=3&q=${searchBarInput.value}`
+      `http://api.weatherapi.com/v1/forecast.json?key=360903de59304a0ea59113502232010&days=3&q=${city}`
     );
     const {
       forecast: { forecastday: forecastDays },
@@ -157,6 +157,7 @@ async function getCurrentWeather() {
   }
 }
 
-(searchButton as HTMLButtonElement).onclick = async () => {
-  getCurrentWeather();
-};
+(searchButton as HTMLButtonElement).onclick = async () =>
+  getWeather((searchBarInput as HTMLInputElement).value);
+
+getWeather();
