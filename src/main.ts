@@ -35,7 +35,6 @@ const [
   windSpeedText,
   nextDay1,
   nextDay2,
-  nextDay3,
 ] = getById(
   "search-bar",
   "search-button",
@@ -50,8 +49,7 @@ const [
   "humidity",
   "wind-speed",
   "next-day1",
-  "next-day2",
-  "next-day3"
+  "next-day2"
 ) as HTMLElement[];
 
 function swapTemperatures(data: APITempData, localtime: string) {
@@ -98,8 +96,9 @@ async function getCurrentWeather() {
     temperatureSwapButton.onclick = () => swapTemperatures(current, localtime);
     humidityText.textContent = `${humidity}%`;
     windSpeedText.textContent = `${wind_kph}km/h`;
-    [nextDay1.textContent, nextDay2.textContent, nextDay3.textContent] =
-      forecastday.map((forecastDayElement: ForecastDayElement) =>
+    [nextDay1.textContent, nextDay2.textContent] = forecastday
+      .splice(1)
+      .map((forecastDayElement: ForecastDayElement) =>
         format(new Date(forecastDayElement.date), "EEEE")
       );
   } catch (error) {
