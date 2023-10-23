@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import "./scss/style.scss";
 import { format } from "date-fns";
 import getById from "./ts/util";
@@ -53,9 +54,25 @@ const [
   "next-day3"
 ) as HTMLElement[];
 
-(searchButton as HTMLButtonElement).onclick = async () => {
-  getCurrentWeather();
-};
+function swapTemperatures(data: APITempData, localtime: string) {
+  const currentTemp = temperatureText.textContent?.split("°")[1];
+  const isCelsius = currentTemp === "C";
+
+  temperatureText.textContent = isCelsius
+    ? `${data.temp_f}°F`
+    : `${data.temp_c}°C`;
+
+  temperatureSwapButton.textContent = isCelsius ? "Display °C" : "Display °F";
+
+  const dateTimeData = new Date(localtime);
+  timeText.textContent = isCelsius
+    ? format(dateTimeData, `h:mmaaa`)
+    : format(dateTimeData, `HH:mm`);
+
+  feelsLikeText.textContent = isCelsius
+    ? `${data.feelslike_f}°F`
+    : `${data.feelslike_c}°C`;
+}
 
 async function getCurrentWeather() {
   try {
@@ -66,9 +83,7 @@ async function getCurrentWeather() {
       forecast: { forecastday },
       current,
       current: {
-        temp_c,
         humidity,
-        feelslike_c,
         wind_kph,
         condition: { icon, text },
       },
@@ -87,31 +102,12 @@ async function getCurrentWeather() {
       forecastday.map((forecastDayElement: ForecastDayElement) =>
         format(new Date(forecastDayElement.date), "EEEE")
       );
-    forecastday.map(
-      (forecastdayElement: ForecastDayElement) =>
-        forecastdayElement.temp.maxtemp_c
-    );
   } catch (error) {
-    console.log(error);
+    // eslint-disable-next-line no-console
+    console.log(error?.toString());
   }
 }
 
-function swapTemperatures(data: APITempData, localtime: string) {
-  const currentTemp = temperatureText.textContent?.split("°")[1];
-  const isCelsius = currentTemp == "C";
-
-  temperatureText.textContent = isCelsius
-    ? `${data.temp_f}°F`
-    : `${data.temp_c}°C`;
-
-  temperatureSwapButton.textContent = isCelsius ? "Display °C" : "Display °F";
-
-  const dateTimeData = new Date(localtime);
-  timeText.textContent = isCelsius
-    ? format(dateTimeData, `h:mmaaa`)
-    : format(dateTimeData, `HH:mm`);
-
-  feelsLikeText.textContent = isCelsius
-    ? `${data.feelslike_f}°F`
-    : `${data.feelslike_c}°C`;
-}
+(searchButton as HTMLButtonElement).onclick = async () => {
+  getCurrentWeather();
+};
