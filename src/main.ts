@@ -3,16 +3,16 @@ import "./scss/style.scss";
 import { format } from "date-fns";
 import getById from "./ts/util";
 
-type APITempData = {
+type APICurrentData = {
   temp_c: string;
   temp_f: string;
   feelslike_c: string;
   feelslike_f: string;
 };
 
-type ForecastDayElement = {
+type ForecastDay = {
   date: string;
-  temp: {
+  day: {
     maxtemp_c: string;
     maxtemp_f: string;
     mintemp_c: string;
@@ -35,6 +35,10 @@ const [
   windSpeedText,
   nextDay1,
   nextDay2,
+  day1MAXTemp,
+  day2MAXTemp,
+  day1MINTemp,
+  day2MINTemp,
 ] = getById(
   "search-bar",
   "search-button",
@@ -48,17 +52,37 @@ const [
   "feels-like",
   "humidity",
   "wind-speed",
-  "next-day1",
-  "next-day2"
+  "next-day1-name",
+  "next-day2-name",
+  "day1-max-temp",
+  "day2-max-temp",
+  "day1-min-temp",
+  "day2-min-temp"
 ) as HTMLElement[];
 
-function swapTemperatures(data: APITempData, localtime: string) {
+function swapTemperatures(
+  current: APICurrentData,
+  forecastDays: ForecastDay[],
+  localtime: string
+) {
   const currentTemp = temperatureText.textContent?.split("°")[1];
   const isCelsius = currentTemp === "C";
 
+  const maxCelsiusTemps = forecastDays
+    .slice(1)
+    .map((forecastDayElement: ForecastDay) => forecastDayElement.day.maxtemp_c);
+
+  const maxFahrenheitTemps = forecastDays
+    .slice(1)
+    .map((forecastDayElement: ForecastDay) => forecastDayElement.day.maxtemp_f);
+
+  [day1MAXTemp.textContent, day2MAXTemp.textContent] = isCelsius
+    ? maxFahrenheitTemps
+    : maxCelsiusTemps;
+
   temperatureText.textContent = isCelsius
-    ? `${data.temp_f}°F`
-    : `${data.temp_c}°C`;
+    ? `${current.temp_f}°F`
+    : `${current.temp_c}°C`;
 
   temperatureSwapButton.textContent = isCelsius ? "Display °C" : "Display °F";
 
@@ -68,8 +92,8 @@ function swapTemperatures(data: APITempData, localtime: string) {
     : format(dateTimeData, `HH:mm`);
 
   feelsLikeText.textContent = isCelsius
-    ? `${data.feelslike_f}°F`
-    : `${data.feelslike_c}°C`;
+    ? `${current.feelslike_f}°F`
+    : `${current.feelslike_c}°C`;
 }
 
 async function getCurrentWeather() {
@@ -78,11 +102,11 @@ async function getCurrentWeather() {
       `http://api.weatherapi.com/v1/forecast.json?key=360903de59304a0ea59113502232010&days=3&q=${searchBarInput.value}`
     );
     const {
-      forecast: { forecastday },
+      forecast: { forecastday: forecastDays },
       current,
       current: {
         humidity,
-        wind_kph,
+        wind_kph: windKPH,
         condition: { icon, text },
       },
       location: { name, localtime },
@@ -92,13 +116,15 @@ async function getCurrentWeather() {
     weatherText.textContent = text;
     locationText.textContent = name;
     dateText.textContent = format(dateTimeData, `eeee, do MMM ''yy`);
-    swapTemperatures(current, localtime);
-    temperatureSwapButton.onclick = () => swapTemperatures(current, localtime);
+    swapTemperatures(current, forecastDays, localtime);
+    temperatureSwapButton.onclick = () =>
+      swapTemperatures(current, forecastDays, localtime);
     humidityText.textContent = `${humidity}%`;
-    windSpeedText.textContent = `${wind_kph}km/h`;
-    [nextDay1.textContent, nextDay2.textContent] = forecastday
-      .splice(1)
-      .map((forecastDayElement: ForecastDayElement) =>
+    windSpeedText.textContent = `${windKPH}km/h`;
+
+    [nextDay1.textContent, nextDay2.textContent] = forecastDays
+      .slice(1)
+      .map((forecastDayElement: ForecastDay) =>
         format(new Date(forecastDayElement.date), "EEEE")
       );
   } catch (error) {
