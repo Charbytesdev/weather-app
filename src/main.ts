@@ -60,14 +60,26 @@ const [
   "day2-min-temp"
 ) as HTMLElement[];
 
-function swapTemperatures(
+function swapTodayTemps(
   current: APICurrentData,
-  forecastDays: ForecastDay[],
+  isCelsius: boolean,
   localtime: string
 ) {
-  const currentTemp = temperatureText.textContent?.split("°")[1];
-  const isCelsius = currentTemp === "C";
+  temperatureText.textContent = isCelsius
+    ? `${current.temp_f}°F`
+    : `${current.temp_c}°C`;
 
+  const dateTimeData = new Date(localtime);
+  timeText.textContent = isCelsius
+    ? format(dateTimeData, `h:mmaaa`)
+    : format(dateTimeData, `HH:mm`);
+
+  feelsLikeText.textContent = isCelsius
+    ? `${current.feelslike_f}°F`
+    : `${current.feelslike_c}°C`;
+}
+
+function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
   const maxCelsiusTemps = forecastDays
     .slice(1)
     .map((forecastDayElement: ForecastDay) => forecastDayElement.day.maxtemp_c);
@@ -79,21 +91,18 @@ function swapTemperatures(
   [day1MAXTemp.textContent, day2MAXTemp.textContent] = isCelsius
     ? maxFahrenheitTemps
     : maxCelsiusTemps;
+}
 
-  temperatureText.textContent = isCelsius
-    ? `${current.temp_f}°F`
-    : `${current.temp_c}°C`;
-
+function swapTemperatures(
+  current: APICurrentData,
+  forecastDays: ForecastDay[],
+  localTime: string
+) {
+  const currentTemp = temperatureText.textContent?.split("°")[1];
+  const isCelsius = currentTemp === "C";
+  swapTodayTemps(current, isCelsius, localTime);
+  swapNextDaysTemps(isCelsius, forecastDays);
   temperatureSwapButton.textContent = isCelsius ? "Display °C" : "Display °F";
-
-  const dateTimeData = new Date(localtime);
-  timeText.textContent = isCelsius
-    ? format(dateTimeData, `h:mmaaa`)
-    : format(dateTimeData, `HH:mm`);
-
-  feelsLikeText.textContent = isCelsius
-    ? `${current.feelslike_f}°F`
-    : `${current.feelslike_c}°C`;
 }
 
 async function getCurrentWeather() {
@@ -109,16 +118,16 @@ async function getCurrentWeather() {
         wind_kph: windKPH,
         condition: { icon, text },
       },
-      location: { name, localtime },
+      location: { name, localtime: localTime },
     } = await response.json();
-    const dateTimeData = new Date(localtime);
+    const dateTimeData = new Date(localTime);
     (weatherImg as HTMLImageElement).src = icon;
     weatherText.textContent = text;
     locationText.textContent = name;
     dateText.textContent = format(dateTimeData, `eeee, do MMM ''yy`);
-    swapTemperatures(current, forecastDays, localtime);
+    swapTemperatures(current, forecastDays, localTime);
     temperatureSwapButton.onclick = () =>
-      swapTemperatures(current, forecastDays, localtime);
+      swapTemperatures(current, forecastDays, localTime);
     humidityText.textContent = `${humidity}%`;
     windSpeedText.textContent = `${windKPH}km/h`;
 
