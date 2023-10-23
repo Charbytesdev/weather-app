@@ -12,12 +12,14 @@ type APICurrentData = {
 
 type ForecastDay = {
   date: string;
-  day: {
-    maxtemp_c: string;
-    maxtemp_f: string;
-    mintemp_c: string;
-    mintemp_f: string;
-  };
+  day: MINMAXTemperatures;
+};
+
+type MINMAXTemperatures = {
+  maxtemp_c: string;
+  maxtemp_f: string;
+  mintemp_c: string;
+  mintemp_f: string;
 };
 
 const [
@@ -60,6 +62,15 @@ const [
   "day2-min-temp"
 ) as HTMLElement[];
 
+function getNextDayTemps(forecastDays: ForecastDay[], property: string) {
+  return forecastDays
+    .slice(1)
+    .map(
+      (forecastDay: ForecastDay) =>
+        forecastDay.day[property as keyof MINMAXTemperatures]
+    );
+}
+
 function swapTodayTemps(
   current: APICurrentData,
   isCelsius: boolean,
@@ -80,13 +91,9 @@ function swapTodayTemps(
 }
 
 function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
-  const maxCelsiusTemps = forecastDays
-    .slice(1)
-    .map((forecastDayElement: ForecastDay) => forecastDayElement.day.maxtemp_c);
+  const maxCelsiusTemps = getNextDayTemps(forecastDays, "maxtemp_c");
 
-  const maxFahrenheitTemps = forecastDays
-    .slice(1)
-    .map((forecastDayElement: ForecastDay) => forecastDayElement.day.maxtemp_f);
+  const maxFahrenheitTemps = getNextDayTemps(forecastDays, "maxtemp_f");
 
   [day1MAXTemp.textContent, day2MAXTemp.textContent] = isCelsius
     ? maxFahrenheitTemps
