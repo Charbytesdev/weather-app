@@ -3,11 +3,13 @@ import "./scss/style.scss";
 import { format } from "date-fns";
 import getById from "./ts/util";
 
-type APICurrentData = {
+type CurrentDay = {
   temp_c: string;
   temp_f: string;
   feelslike_c: string;
   feelslike_f: string;
+  wind_kph: string;
+  wind_mph: string;
 };
 
 type ForecastDay = {
@@ -72,7 +74,7 @@ function getNextDayTemps(forecastDays: ForecastDay[], property: string) {
 }
 
 function swapTodayTemps(
-  current: APICurrentData,
+  current: CurrentDay,
   isCelsius: boolean,
   localtime: string
 ) {
@@ -88,6 +90,10 @@ function swapTodayTemps(
   feelsLikeText.textContent = isCelsius
     ? `${current.feelslike_f}°F`
     : `${current.feelslike_c}°C`;
+
+  windSpeedText.textContent = isCelsius
+    ? `${current.wind_mph}mph`
+    : `${current.wind_kph}km/h`;
 }
 
 function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
@@ -109,7 +115,7 @@ function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
 }
 
 function swapTemperatures(
-  current: APICurrentData,
+  current: CurrentDay,
   forecastDays: ForecastDay[],
   localTime: string
 ) {
@@ -130,7 +136,6 @@ async function getWeather(city: string = "london") {
       current,
       current: {
         humidity,
-        wind_kph: windKPH,
         condition: { icon, text },
       },
       location: { name, localtime: localTime },
@@ -144,8 +149,6 @@ async function getWeather(city: string = "london") {
     temperatureSwapButton.onclick = () =>
       swapTemperatures(current, forecastDays, localTime);
     humidityText.textContent = `${humidity}%`;
-    windSpeedText.textContent = `${windKPH}km/h`;
-
     [nextDay1.textContent, nextDay2.textContent] = forecastDays
       .slice(1)
       .map((forecastDayElement: ForecastDay) =>
