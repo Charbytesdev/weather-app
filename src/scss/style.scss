@@ -1,0 +1,18 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: calc(100vh - 4rem);
+  width: calc(100vw - 4rem);
+  background-image: url("../img/bg.jpg");
+  background-size: cover;
+}
+
+body {
+  padding: 2rem;
+}
