@@ -1,3 +1,6 @@
+@use "components";
+@use "layout";
+
 *,
 *::before,
 *::after {
@@ -14,5 +17,6 @@ body {
 }
 
 body {
+  display: flex;
   padding: 2rem;
 }

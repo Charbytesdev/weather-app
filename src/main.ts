@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import "./scss/style.scss";
+import "./scss/main.scss";
 import { format } from "date-fns";
 import getById from "./ts/util";
 
