@@ -73,14 +73,38 @@ function getNextDayTemps(forecastDays: ForecastDay[], property: string) {
     );
 }
 
+function addSymbol(unit: string, symbol: string) {
+  return `${unit} ${symbol}`;
+}
+
+function addCelsiusSymbol(unit: string) {
+  return addSymbol(unit, "°C");
+}
+
+function addFahrenheitSymbol(unit: string) {
+  return addSymbol(unit, "°F");
+}
+
+function addArraySymbol(unitArray: string[], symbol: string) {
+  return unitArray.map((unit) => addSymbol(unit, symbol));
+}
+
+function addArrayCelsiusSymbol(celsiusArray: string[]) {
+  return addArraySymbol(celsiusArray, "°C");
+}
+
+function addArrayFahrenheitSymbol(celsiusArray: string[]) {
+  return addArraySymbol(celsiusArray, "°F");
+}
+
 function swapTodayTemps(
   current: CurrentDay,
   isCelsius: boolean,
   localtime: string
 ) {
   temperatureText.textContent = isCelsius
-    ? `${current.temp_f} °F`
-    : `${current.temp_c} °C`;
+    ? addFahrenheitSymbol(current.temp_f)
+    : addCelsiusSymbol(current.temp_c);
 
   const dateTimeData = new Date(localtime);
   timeText.textContent = isCelsius
@@ -88,12 +112,12 @@ function swapTodayTemps(
     : format(dateTimeData, `HH:mm`);
 
   feelsLikeText.textContent = isCelsius
-    ? `${current.feelslike_f} °F`
-    : `${current.feelslike_c} °C`;
+    ? addFahrenheitSymbol(current.feelslike_f)
+    : addCelsiusSymbol(current.feelslike_c);
 
   windSpeedText.textContent = isCelsius
-    ? `${current.wind_mph} mph`
-    : `${current.wind_kph} km/h`;
+    ? addSymbol(current.wind_mph, "mph")
+    : addSymbol(current.wind_kph, "km/h");
 }
 
 function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
@@ -106,12 +130,12 @@ function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
   const minFahrenheitTemps = getNextDayTemps(forecastDays, "mintemp_f");
 
   [day1MAXTemp.textContent, day2MAXTemp.textContent] = isCelsius
-    ? maxFahrenheitTemps
-    : maxCelsiusTemps;
+    ? addArrayFahrenheitSymbol(maxFahrenheitTemps)
+    : addArrayCelsiusSymbol(maxCelsiusTemps);
 
   [day1MINTemp.textContent, day2MINTemp.textContent] = isCelsius
-    ? minFahrenheitTemps
-    : minCelsiusTemps;
+    ? addArrayFahrenheitSymbol(minFahrenheitTemps)
+    : addArrayCelsiusSymbol(minCelsiusTemps);
 }
 
 function swapTemperatures(
@@ -148,7 +172,7 @@ async function getWeather(city: string = "london") {
     swapTemperatures(current, forecastDays, localTime);
     temperatureSwapButton.onclick = () =>
       swapTemperatures(current, forecastDays, localTime);
-    humidityText.textContent = `${humidity}%`;
+    humidityText.textContent = addSymbol(humidity, "%");
     [nextDay1.textContent, nextDay2.textContent] = forecastDays
       .slice(1)
       .map((forecastDayElement: ForecastDay) =>
