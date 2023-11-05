@@ -79,21 +79,21 @@ function swapTodayTemps(
   localtime: string
 ) {
   temperatureText.textContent = isCelsius
-    ? `${current.temp_f}°F`
-    : `${current.temp_c}°C`;
+    ? `${current.temp_f} °F`
+    : `${current.temp_c} °C`;
 
   const dateTimeData = new Date(localtime);
   timeText.textContent = isCelsius
-    ? format(dateTimeData, `h:mmaaa`)
+    ? format(dateTimeData, `h:mm aaa`)
     : format(dateTimeData, `HH:mm`);
 
   feelsLikeText.textContent = isCelsius
-    ? `${current.feelslike_f}°F`
-    : `${current.feelslike_c}°C`;
+    ? `${current.feelslike_f} °F`
+    : `${current.feelslike_c} °C`;
 
   windSpeedText.textContent = isCelsius
-    ? `${current.wind_mph}mph`
-    : `${current.wind_kph}km/h`;
+    ? `${current.wind_mph} mph`
+    : `${current.wind_kph} km/h`;
 }
 
 function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
