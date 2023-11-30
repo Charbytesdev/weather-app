@@ -143,7 +143,8 @@ function setData(
   localTime: string,
   swapUnits: boolean
 ) {
-  let isCelsius = temperatureText.textContent?.includes("C") as boolean;
+  const tempContent = temperatureText.textContent;
+  let isCelsius = !tempContent || (tempContent?.includes("C") as boolean);
   isCelsius = swapUnits ? isCelsius : !isCelsius;
   setTodaysData(current, isCelsius, localTime);
   setNextDaysTemps(isCelsius, forecastDays);
