@@ -5,6 +5,8 @@
 *,
 *::before,
 *::after {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
   color: aliceblue;
   margin: 0;
   padding: 0;
@@ -12,13 +14,13 @@
 
 html,
 body {
-  height: calc(100vh - 4rem);
-  width: calc(100vw - 4rem);
+  height: calc(100vh - 3rem);
+  width: calc(100vw - 3rem);
   background-image: url("../img/bg.jpg");
   background-size: cover;
 }
 
 body {
   display: flex;
-  padding: 2rem;
+  padding: 1.5rem;
 }
