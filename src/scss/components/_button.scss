@@ -1,0 +1,25 @@
+@use "../abstracts" as *;
+
+.swap-temp-button,
+.search-button {
+  font-size: 0.5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 2rem;
+  padding: 0.2rem 0.5rem;
+  background-color: transparent;
+  align-self: start;
+  border-color: azure;
+  background-color: $red;
+  border-color: $blue;
+  &:hover {
+    background-color: $more-red;
+    border-color: $more-blue;
+  }
+}
+.swap-temp-button {
+  margin: 0 0 1rem 0;
+}
