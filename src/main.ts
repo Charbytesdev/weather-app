@@ -128,7 +128,6 @@ function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
   const minCelsiusTemps = getNextDayTemps(forecastDays, "mintemp_c");
 
   const minFahrenheitTemps = getNextDayTemps(forecastDays, "mintemp_f");
-
   [day1MAXTemp.textContent, day2MAXTemp.textContent] = isCelsius
     ? addArrayFahrenheitSymbol(maxFahrenheitTemps)
     : addArrayCelsiusSymbol(maxCelsiusTemps);
@@ -186,5 +185,10 @@ async function getWeather(city: string = "london") {
 
 (searchButton as HTMLButtonElement).onclick = async () =>
   getWeather((searchBarInput as HTMLInputElement).value);
+document.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    searchButton.click();
+  }
+});
 
 getWeather();
