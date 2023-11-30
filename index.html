@@ -10,21 +10,28 @@
 
 <body>
   <div id="app" class="app">
-    <div id="weather-text" class="header-text"></div>
-    <div id="location" class="location-text"></div>
-    <div id="date" class="date-text"></div>
-    <div id="time" class="time-text"></div>
-    <div id="temperature" class="current-temp-text"></div>
-    <button id="swap-temperature-button" class="swap-temp-button">Display °F</button>
-    <img id="weather-img" class="weather-img">
-    <input type="text" id="search-bar" class="search-bar">
-    <button id="search-button" class="search-button">search</button>
-    <div>
+    <main>
+      <div class="header-container">
+        <div id="weather-text" class="header-text"></div>
+        <img id="weather-img" class="weather-img">
+      </div>
+      <div id="location" class="location-text"></div>
+      <div id="date" class="date-text"></div>
+      <div id="time" class="time-text"></div>
+      <div id="temperature" class="current-temp-text"></div>
+      <button id="swap-temperature-button" class="swap-temp-button">Display °F</button>
+      <div class="search-container">
+        <input type="text" id="search-bar" class="search-bar" placeholder="Search location...">
+        <button id="search-button" class="search-button">search</button>
+      </div>
+    </main>
+    <div class="sidebar">
       <div id="feels-like" class="feels-like-text"></div>
       <div id="humidity" class="humidity-text"></div>
       <div id="wind-speed" class="wind-speed-text"></div>
     </div>
-    <div>
+
+    <div class="footer">
       <div>
         <div id="next-day1-name" class="day1-text"></div>
         <div id="day1-max-temp" class="day1-max-temp-text"></div>
