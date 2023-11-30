@@ -64,7 +64,7 @@ const [
   "day2-min-temp"
 ) as HTMLElement[];
 
-function getNextDayTemps(forecastDays: ForecastDay[], property: string) {
+function setNextDaysData(forecastDays: ForecastDay[], property: string) {
   return forecastDays
     .slice(1)
     .map(
@@ -97,7 +97,7 @@ function addArrayFahrenheitSymbol(celsiusArray: string[]) {
   return addArraySymbol(celsiusArray, "°F");
 }
 
-function swapTodayTemps(
+function setTodaysData(
   current: CurrentDay,
   isCelsius: boolean,
   localtime: string
@@ -120,14 +120,14 @@ function swapTodayTemps(
     : addSymbol(current.wind_kph, "km/h");
 }
 
-function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
-  const maxCelsiusTemps = getNextDayTemps(forecastDays, "maxtemp_c");
+function setNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
+  const maxCelsiusTemps = setNextDaysData(forecastDays, "maxtemp_c");
 
-  const maxFahrenheitTemps = getNextDayTemps(forecastDays, "maxtemp_f");
+  const maxFahrenheitTemps = setNextDaysData(forecastDays, "maxtemp_f");
 
-  const minCelsiusTemps = getNextDayTemps(forecastDays, "mintemp_c");
+  const minCelsiusTemps = setNextDaysData(forecastDays, "mintemp_c");
 
-  const minFahrenheitTemps = getNextDayTemps(forecastDays, "mintemp_f");
+  const minFahrenheitTemps = setNextDaysData(forecastDays, "mintemp_f");
   [day1MAXTemp.textContent, day2MAXTemp.textContent] = isCelsius
     ? addArrayFahrenheitSymbol(maxFahrenheitTemps)
     : addArrayCelsiusSymbol(maxCelsiusTemps);
@@ -145,8 +145,8 @@ function swapTemperatures(
 ) {
   let isCelsius = temperatureText.textContent?.includes("C") as boolean;
   isCelsius = swapUnits ? isCelsius : !isCelsius;
-  swapTodayTemps(current, isCelsius, localTime);
-  swapNextDaysTemps(isCelsius, forecastDays);
+  setTodaysData(current, isCelsius, localTime);
+  setNextDaysTemps(isCelsius, forecastDays);
   temperatureSwapButton.textContent = isCelsius ? "Display °C" : "Display °F";
 }
 
