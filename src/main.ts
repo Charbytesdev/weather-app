@@ -137,7 +137,7 @@ function setNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
     : addArrayCelsiusSymbol(minCelsiusTemps);
 }
 
-function swapTemperatures(
+function setData(
   current: CurrentDay,
   forecastDays: ForecastDay[],
   localTime: string,
@@ -169,9 +169,9 @@ async function getWeather(city: string = "london") {
     weatherText.textContent = text;
     locationText.textContent = name;
     dateText.textContent = format(dateTimeData, `eeee, do MMM ''yy`);
-    swapTemperatures(current, forecastDays, localTime, false);
+    setData(current, forecastDays, localTime, false);
     temperatureSwapButton.onclick = () =>
-      swapTemperatures(current, forecastDays, localTime, true);
+      setData(current, forecastDays, localTime, true);
     humidityText.textContent = addSymbol(humidity, "%");
     [nextDay1.textContent, nextDay2.textContent] = forecastDays
       .slice(1)
