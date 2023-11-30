@@ -140,10 +140,11 @@ function swapNextDaysTemps(isCelsius: boolean, forecastDays: ForecastDay[]) {
 function swapTemperatures(
   current: CurrentDay,
   forecastDays: ForecastDay[],
-  localTime: string
+  localTime: string,
+  swapUnits: boolean
 ) {
-  const currentTemp = temperatureText.textContent?.split("°")[1];
-  const isCelsius = currentTemp === "C";
+  let isCelsius = temperatureText.textContent?.includes("C") as boolean;
+  isCelsius = swapUnits ? isCelsius : !isCelsius;
   swapTodayTemps(current, isCelsius, localTime);
   swapNextDaysTemps(isCelsius, forecastDays);
   temperatureSwapButton.textContent = isCelsius ? "Display °C" : "Display °F";
@@ -168,9 +169,9 @@ async function getWeather(city: string = "london") {
     weatherText.textContent = text;
     locationText.textContent = name;
     dateText.textContent = format(dateTimeData, `eeee, do MMM ''yy`);
-    swapTemperatures(current, forecastDays, localTime);
+    swapTemperatures(current, forecastDays, localTime, false);
     temperatureSwapButton.onclick = () =>
-      swapTemperatures(current, forecastDays, localTime);
+      swapTemperatures(current, forecastDays, localTime, true);
     humidityText.textContent = addSymbol(humidity, "%");
     [nextDay1.textContent, nextDay2.textContent] = forecastDays
       .slice(1)
