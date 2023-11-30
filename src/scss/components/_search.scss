@@ -1,0 +1,24 @@
+.search-container {
+  display: flex;
+  .search-bar {
+    width: 8rem;
+    border: none;
+    font-weight: 700;
+    outline: none;
+    background-color: transparent;
+    border-bottom: white solid 1px;
+    padding: 0 0.3rem;
+    margin-right: 0.5rem;
+    &::placeholder {
+      color: rgb(255, 255, 255);
+      opacity: 1;
+    }
+  }
+  input:invalid {
+    border-color: red;
+  }
+
+  input:valid {
+    border-color: var(--neon-green);
+  }
+}
