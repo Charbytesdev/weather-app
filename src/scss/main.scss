@@ -1,9 +1,11 @@
 @use "components";
 @use "layout";
+@use "abstracts";
 
 *,
 *::before,
 *::after {
+  color: aliceblue;
   margin: 0;
   padding: 0;
 }
