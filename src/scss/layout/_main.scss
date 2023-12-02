@@ -1,28 +1,28 @@
 .main {
   .header-container {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
   }
   .header-text {
-    font-size: 2rem;
+    font-size: 4rem;
     text-transform: capitalize;
   }
 
   .location-text {
     font-family: "Courier New", Courier, monospace;
 
-    margin: 0.2rem 0;
-    font-size: 1.3rem;
+    margin: 0.4rem 0;
+    font-size: 2.6rem;
   }
 
   .date-text,
   .time-text {
-    font-size: 0.8rem;
+    font-size: 1.6rem;
   }
 
   .current-temp-text {
-    font-size: 2.5rem;
+    font-size: 5rem;
     font-weight: 800;
-    margin: 0.5rem 0 0.2rem 0;
+    margin: 1rem 0 0.4rem 0;
   }
 }

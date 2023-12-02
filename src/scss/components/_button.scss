@@ -3,14 +3,14 @@
 .swap-temp-button,
 .search-button {
   font-family: "Courier New", Courier, monospace;
-  font-size: 0.5em;
+  font-size: 1em;
   font-weight: 800;
   text-transform: uppercase;
   margin: 0;
   padding: 0;
   cursor: pointer;
-  border-radius: 2rem;
-  padding: 0.2rem 0.5rem;
+  border-radius: 4rem;
+  padding: 0.4rem 1rem;
   background-color: transparent;
   align-self: start;
   border-color: azure;
@@ -22,5 +22,5 @@
   }
 }
 .swap-temp-button {
-  margin: 0 0 1rem 0;
+  margin: 0 0 2rem 0;
 }

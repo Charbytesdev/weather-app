@@ -1,17 +1,17 @@
 .sidebar {
-  font-size: 1rem;
+  font-size: 2rem;
   justify-self: end;
   .sidebar-container {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .sidebar-label {
-    font-size: 0.8rem;
+    font-size: 1.6rem;
   }
 
   .sidebar-text {
-    font-size: 1.3rem;
+    font-size: 2.6rem;
   }
 }
