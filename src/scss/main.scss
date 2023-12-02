@@ -1,12 +1,14 @@
 @use "components";
 @use "layout";
-@use "abstracts";
+@use "abstracts" as *;
 
 *,
 *::before,
 *::after {
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
+  animation: text-color-change 4s linear infinite;
+
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+    1px 1px 0 black;
   color: aliceblue;
   margin: 0;
   padding: 0;
@@ -23,4 +25,26 @@ body {
 body {
   display: flex;
   padding: 1.5rem;
+}
+
+@keyframes text-color-change {
+  from {
+    border-color: $neon-red;
+  }
+
+  25% {
+    border-color: $neon-purple;
+  }
+  50% {
+    border-color: $neon-blue;
+  }
+  75% {
+    border-color: $neon-green;
+  }
+  100% {
+    border-color: $neon-gold;
+  }
+  to {
+    border-color: $neon-red;
+  }
 }
