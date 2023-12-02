@@ -154,7 +154,7 @@ function setData(
 async function getWeather(city: string = "london") {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=360903de59304a0ea59113502232010&days=3&q=${city}`
+      `https://api.weatherapi.com/v1/forecast.json?key=360903de59304a0ea59113502232010&days=3&q=${city}`
     );
     const {
       forecast: { forecastday: forecastDays },
