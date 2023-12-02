@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link rel="icon" type="image/png" href="/assets/favicon-7bf5e205.png">
+
+  
+  <script type="module" crossorigin src="/assets/index-523bef71.js"></script>
+  <link rel="stylesheet" href="/assets/index-223e78d1.css">
+</head>
+
+<body>
+  <div id="app" class="app">
+    <main class="main">
+      <div class="header-container">
+        <div id="weather-text" class="header-text"></div>
+        <img id="weather-img" class="weather-img">
+      </div>
+      <div id="location" class="location-text"></div>
+      <div id="date" class="date-text"></div>
+      <div id="time" class="time-text"></div>
+      <div id="temperature" class="current-temp-text"></div>
+      <button id="swap-temperature-button" class="swap-temp-button">Display °F</button>
+      <div class="search-container">
+        <input type="text" id="search-bar" class="search-bar" placeholder="Search location...">
+        <button id="search-button" class="search-button">search</button>
+      </div>
+    </main>
+    <div class="sidebar">
+      <div class="sidebar-container">
+        <img class="temperature-icon" src="/assets/temperature-icon-6d8fefc1.svg">
+        <div>
+          <label class="sidebar-label">Feels Like</label>
+          <div id="feels-like" class="sidebar-text"></div>
+        </div>
+      </div>
+      <div class="sidebar-container">
+        <img class="temperature-icon" src="/assets/humidity-65e7b9f7.png">
+        <div>
+          <label class="sidebar-label">Humidity</label>
+          <div id="humidity" class="sidebar-text"></div>
+        </div>
+      </div>
+      <div class="sidebar-container">
+        <img class="temperature-icon" src="/assets/wind-cc7756a2.png">
+        <div>
+          <label class="sidebar-label">Wind Speed</label>
+          <div id="wind-speed" class="sidebar-text"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="day-container">
+        <div id="next-day1-name" class="day-text"></div>
+        <div id="day1-max-temp" class="max-temp"></div>
+        <div id="day1-min-temp" class="min-temp"></div>
+      </div>
+      <div class="day-container">
+        <div id="next-day2-name" class="day-text"></div>
+        <div id="day2-max-temp" class="max-temp"></div>
+        <div id="day2-min-temp" class="min-temp"></div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
