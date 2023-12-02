@@ -4,7 +4,39 @@
   gap: 2rem;
   grid-column: 1/-1;
   justify-self: center;
+
+  .day-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    .day-text {
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .max-temp {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+    }
+    .min-temp {
+      font-size: 0.8rem;
+    }
+  }
 }
 
-@keyframes color-change {
+@keyframes change-background {
+  0% {
+    color: #69b7eb;
+  }
+  50% {
+    color: #b3dbd3;
+  }
+  100% {
+    color: #f4d6db;
+  }
+}
+
+* {
+  animation: change-background 4s linear infinite;
 }
