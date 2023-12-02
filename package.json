@@ -2,8 +2,11 @@
   "name": "weather-app",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://charbytesdev.github.io/weather-app/",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext .ts",
     "dev": "vite",
     "build": "tsc && vite build",
@@ -15,9 +18,10 @@
     "date-fns": "^2.30.0",
     "eslint": "^8.52.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^9.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0",
+    "gh-pages": "^6.1.0",
     "sass": "^1.69.4",
     "typescript": "^5.2.2",
     "vite": "^4.4.5"
